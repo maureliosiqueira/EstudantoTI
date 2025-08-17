@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste Emergencial</title>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "SUA_API_KEY",
+            authDomain: "SEU_PROJETO.firebaseapp.com",
+            projectId: "SEU_PROJETO"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        function login() {
+            console.log("Botão clicado!"); // Verifica se o clique está sendo registrado
+            const provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup(provider)
+                .then(() => alert("Login feito!"))
+                .catch(error => {
+                    console.error("Erro completo:", error);
+                    alert("Falha: " + error.message);
+                });
+        }
+    </script>
+</head>
+<body>
+    <button onclick="login()" style="padding: 15px; background: red; color: white; font-weight: bold;">
+        CLIQUE AQUI PARA TESTE EMERGENCIAL
+    </button>
+</body>
+</html>
