@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Solução Definitiva</title>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script>
+        // Cole AQUI as novas credenciais do novo projeto
+        const firebaseConfig = {
+            apiKey: "SUA_NOVA_API_KEY",
+            authDomain: "estudanteti-final.firebaseapp.com",
+            projectId: "estudanteti-final"
+        };
+        
+        // Inicialização compatível (versão mais estável)
+        firebase.initializeApp(firebaseConfig);
+        
+        function login() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            // Força a seleção de conta sempre
+            provider.setCustomParameters({ prompt: 'select_account' });
+            
+            // Método REDIRECT (elimina problemas de popup)
+            firebase.auth().signInWithRedirect(provider);
+        }
+        
+        // Verifica resultado após redirecionamento
+        firebase.auth().getRedirectResult()
+            .then((result) => {
+                if (result.user) {
+                    alert("LOGIN BEM-SUCEDIDO!\nEmail: " + result.user.email);
+                }
+            }).catch((error) => {
+                console.error("Erro completo:", error);
+                alert("Código do erro: " + error.code);
+            });
+    </script>
+</head>
+<body>
+    <button onclick="login()" style="padding: 15px; background: #4285F4; color: white; border: none; border-radius: 5px; font-size: 18px;">
+        LOGIN COM GOOGLE (SOLUÇÃO FINAL)
+    </button>
+    
+    <p><strong>Dica:</strong> Se o botão não funcionar, abra o console (F12) e digite: <code>login()</code></p>
+</body>
+</html>
