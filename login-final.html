@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Solução Definitiva</title>
+    <!-- Firebase SDK (versão compatível) -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script>
+        // Configuração do Firebase (USE SUAS CREDENCIAIS)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBjPE78Rp5XO2NWBqguSdxKAzPKS9a-xso",
+            authDomain: "ti-emergencia.firebaseapp.com",
+            projectId: "ti-emergencia"
+        };
+
+        // Inicialização segura
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+
+        // Função login() corrigida
+        function login() {
+            console.log("[DEBUG] Iniciando login...");
+            const provider = new firebase.auth.GoogleAuthProvider();
+            provider.setCustomParameters({ prompt: 'select_account' });
+            
+            // Método REDIRECT (confiável)
+            firebase.auth().signInWithRedirect(provider);
+        }
+
+        // Verifica resultado do redirecionamento
+        firebase.auth().getRedirectResult()
+            .then(result => {
+                if (result.user) {
+                    alert("SUCESSO! Logado como: " + result.user.email);
+                }
+            })
+            .catch(error => {
+                console.error("[ERRO]", error);
+                alert("Falha: " + error.code + "\n" + error.message);
+            });
+    </script>
+</head>
+<body>
+    <button onclick="login()" 
+            style="padding: 15px; 
+                   background: #FF4500; 
+                   color: white; 
+                   border: none; 
+                   font-size: 18px; 
+                   cursor: pointer;">
+        🚀 CLIQUE AQUI - SOLUÇÃO DEFINITIVA
+    </button>
+    <p style="color: red; font-weight: bold;">
+        Se nada acontecer, abra o console (F12) e digite: login()
+    </p>
+</body>
+</html>
