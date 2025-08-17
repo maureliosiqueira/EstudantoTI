@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste Final Login</title>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AlzaSyB7sjQ3pUXkwvLMGEqdr8S5dD_pX50KMm0",
+            authDomain: "estudanteti.firebaseapp.com",
+            projectId: "estudanteti",
+            appId: "1:749894872884:web:fa2a53a4f8be33a447db161"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        function login() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            provider.setCustomParameters({ prompt: 'select_account' });
+            
+            firebase.auth().signInWithPopup(provider)
+                .then((result) => {
+                    alert("SUCESSO! Logado como: " + result.user.email);
+                }).catch((error) => {
+                    alert("ERRO: " + error.message + "\n\nAbra o console (F12)");
+                    console.error("Detalhes do erro:", error);
+                });
+        }
+    </script>
+</head>
+<body>
+    <button onclick="login()">TESTAR LOGIN AGORA</button>
+</body>
+</html>
