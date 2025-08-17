@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Solução Emergencial</title>
+    <!-- Use a versão COMPAT para maior estabilidade -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script>
+        // Cole AQUI as credenciais do NOVO projeto "TI-EMERGENCIA"
+        const firebaseConfig = {
+            apiKey: "AIzaSyABCD...", // Substitua pela SUA chave
+            authDomain: "ti-emergencia.firebaseapp.com",
+            projectId: "ti-emergencia"
+        };
+        
+        // Inicialização COMPATÍVEL
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+
+        function login() {
+            console.log("[DEBUG] Iniciando login...");
+            
+            const provider = new firebase.auth.GoogleAuthProvider();
+            // Força a seleção de conta SEMPRE
+            provider.setCustomParameters({ prompt: 'select_account' });
+
+            // Método ALTERNATIVO (sem popups)
+            firebase.auth().signInWithRedirect(provider)
+                .then(() => console.log("[DEBUG] Redirecionamento iniciado"))
+                .catch(error => {
+                    console.error("[ERRO COMPLETO]", error);
+                    alert(`Código: ${error.code}\nMensagem: ${error.message}`);
+                });
+        }
+
+        // Verifica resultado APÓS redirecionamento
+        firebase.auth().getRedirectResult()
+            .then(result => {
+                if (result.user) {
+                    alert(`SUCESSO! Logado como: ${result.user.email}`);
+                }
+            })
+            .catch(error => {
+                console.error("[ERRO NO REDIRECT]", error);
+            });
+    </script>
+</head>
+<body>
+    <button onclick="login()" 
+            style="padding: 15px; 
+                   background: #FF0000; 
+                   color: white; 
+                   border: none; 
+                   font-size: 18px;
+                   cursor: pointer;">
+        🔥 LOGIN URGENTE - CLIQUE AQUI
+    </button>
+    
+    <p style="color: red; font-weight: bold;">
+        Se nada acontecer, abra o console (F12) e digite: login()
+    </p>
+</body>
+</html>
