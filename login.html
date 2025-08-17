@@ -1,114 +1,40 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estudando TI - Login</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-        }
-        button {
-            background-color: #4285F4;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            margin: 20px auto;
-        }
-        button img {
-            width: 20px;
-            margin-right: 10px;
-            background: white;
-            padding: 8px;
-            border-radius: 3px;
-        }
-        #userInfo {
-            margin-top: 20px;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <h1>EstudanteTI</h1>
-    <p>Faça login para acessar o sistema de questões</p>
-    
-    <button id="googleLogin">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Logo">
-        Entrar com Google
-    </button>
-    
-    <div id="userInfo">
-        <h3>Você está logado como:</h3>
-        <p id="userEmail"></p>
-        <button id="logout">Sair</button>
-    </div>
-
+    <title>Teste de Login - EstudanteTI</title>
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
     
-    <!-- Configuração do Firebase com SEUS DADOS -->
+    <!-- Configure com SEUS dados do Firebase -->
     <script>
-        // CONFIGURAÇÃO DO SEU PROJETO (substitua apenas se necessário)
         const firebaseConfig = {
-            apiKey: "AlzaSyB7sjQ3pUXkwvLMGEqdr8S5dD_pX50KMm0",
+            apiKey: "AlzaSyB7sjQ3pUXkwvLMGEqdr8S5dD_pX50KMm0", // Substitua se necessário
             authDomain: "estudanteti.firebaseapp.com",
             projectId: "estudanteti",
             storageBucket: "estudanteti.appspot.com",
             messagingSenderId: "749894872884",
-            appId: "1:749894872884:web:fa2a53a4f8be33a447db161"
+            appId: "1:749894872884:web:fa2a53a4f8be33a447db161" // Seu App ID aqui
         };
-        
-        // Inicializa o Firebase
         firebase.initializeApp(firebaseConfig);
     </script>
-
-    <!-- Lógica de Autenticação -->
+</head>
+<body>
+    <h2>Teste de Login Firebase</h2>
+    <button id="loginBtn">Login com Google</button>
+    
     <script>
-        document.getElementById("googleLogin").addEventListener("click", () => {
+        document.getElementById("loginBtn").addEventListener("click", () => {
             const provider = new firebase.auth.GoogleAuthProvider();
-            
             firebase.auth().signInWithPopup(provider)
                 .then((result) => {
-                    showUserInfo(result.user);
+                    alert("Login feito como: " + result.user.email);
+                    console.log("Usuário:", result.user);
                 })
                 .catch((error) => {
-                    alert("Erro no login: " + error.message);
-                    console.error(error);
+                    alert("Erro: " + error.message);
+                    console.error("Detalhes:", error);
                 });
-        });
-
-        document.getElementById("logout").addEventListener("click", () => {
-            firebase.auth().signOut()
-                .then(() => {
-                    document.getElementById("userInfo").style.display = "none";
-                    document.getElementById("googleLogin").style.display = "flex";
-                });
-        });
-
-        function showUserInfo(user) {
-            document.getElementById("userEmail").textContent = user.email;
-            document.getElementById("userInfo").style.display = "block";
-            document.getElementById("googleLogin").style.display = "none";
-        }
-
-        // Verifica se o usuário já está logado ao carregar a página
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                showUserInfo(user);
-            }
         });
     </script>
 </body>
